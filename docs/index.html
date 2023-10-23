@@ -1,43 +1,45 @@
 <!doctype html>
-<html>
+<html lang="en">
 
 <head>
-  <meta charset="utf8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A search interface for openjdk mailing lists.">
   <title>Search for openjdk mailing lists</title>
+
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.css">
   <link rel="stylesheet" href="demo.css">
+  
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="https://hixon10.github.io/openjdk-mailing-lists-search/favicon.ico">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.js"></script>
-
 </head>
 
 <body>
-  <h1>Search for openjdk mailing lists</h1>
+  <header>
+    <h1>Search for openjdk mailing lists</h1>
+  </header>
 
   <main>
-	<p>A database size is more than <strong>400MB</strong>, so you need to wait, when you press Download database button, while database is being downloaded. When the database is ready, Execute button will enabled.</p>
-	
-	<p>Firefox could have problems with loading such huge database. Try to run it in Chrome in this case.</p>
-	
-	<button id="download-db" class="button">Download database</button>
-	<br/>
-	<br/>
-  
-    <label for='commands'>Enter some SQL</label>
-    <br>
+    <section>
+      <p>A database size is more than <strong>400MB</strong>. Please be patient and wait when you press the "Download database" button for the database to be downloaded. Once the database is ready, the "Execute" button will be enabled.</p>
+      <p><strong>Note:</strong> Firefox might have problems loading such a large database. Please try using Chrome if you encounter any issues.</p>
+      <button id="download-db" class="button">Download database</button>
+    </section>
 
-    <textarea id="commands">SELECT url, email_title, content, month_url, indent, reply_to_url, email_author, timestamp_in_sec, previous_url, next_url 
-FROM emails 
-LIMIT 3;</textarea>
+    <section>
+      <label for='commands'>Enter your SQL command:</label>
+      <textarea id="commands">SELECT url, email_title, content, month_url, indent, reply_to_url, email_author, timestamp_in_sec, previous_url, next_url FROM emails LIMIT 3;</textarea>
+      <button id="execute" type="button" disabled>Execute</button>
+    </section>
 
-    <button id="execute" type="button" disabled="">Execute</button>
-   
-
-    <div id="error" class="error"></div>
-
-    <pre id="output">Results will be displayed here</pre>
+    <section>
+      <div id="error" class="error" role="alert" aria-live="assertive"></div>
+      <pre id="output">Results will be displayed here</pre>
+    </section>
   </main>
 
+  <!-- Scripts -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js'></script>
   <script type="text/javascript" src="jszip.min.js"></script>
   <script type="text/javascript" src="gui.js"></script>
